@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Animes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: left;
+        }
+
+        form {
+            margin: 20px 0;
+            text-align: left;
+            width: 300px;
+        }
+
+        label, input, select, button {
+            margin: 5px 0;
+            display: block;
+        }
+
+        button {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+
+        #listaAnimes {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Animes</h1>
+
+    <form id="formAnime" onsubmit="guardarDados(event)">
+        <label for="nomeAnime">Nome:</label>
+        <input type="text" name="nomeAnime" id="nomeAnime">
+        
+        <label for="anoAnime">Ano de Lançamento:</label>
+        <input type="number" name="anoAnime" id="anoAnime" min="1099" max="2099">
+        
+        <label for="generoAnime">Gênero:</label>
+        <select name="generoAnime" id="generoAnime">
+            <option value="Terror">Terror</option>
+            <option value="Comédia">Comédia</option>
+            <option value="Romance">Romance</option>
+            <option value="Ação">Ação</option>
+            <option value="Isekai">Isekai</option>
+            <option value="Outros">Outros</option>
+        </select>
+
+        <label for="notaAnime">Nota:</label>
+        <input type="number" name="notaAnime" id="notaAnime" min="0" max="10">
+
+        <button type="submit">ENVIAR</button>
+    </form>
+
+    <h2>Lista de Animes Cadastrados:</h2>
+    <ol id="listaAnimes"></ol>
+
+    <script>
+        var animes = [];
+
+        function guardarDados(event) {
+            event.preventDefault();
+
+            var nome = document.getElementById("nomeAnime").value;
+            var genero = document.getElementById("generoAnime").value;
+            var ano = document.getElementById("anoAnime").value;
+            var nota = document.getElementById("notaAnime").value;
+
+            animes.push({
+                'nome': nome,
+                'genero': genero,
+                'ano': ano,
+                'nota': nota
+            });
+
+            limparCampos();
+            exibirAnimes();
+        }
+
+        function limparCampos() {
+            document.getElementById("nomeAnime").value = "";
+            document.getElementById("anoAnime").value = "";
+            document.getElementById("generoAnime").selectedIndex = 0;
+            document.getElementById("notaAnime").value = "";
+        }
+
+        function exibirAnimes() {
+            var listaAnimesElement = document.getElementById("listaAnimes");
+            listaAnimesElement.innerHTML = "";
+
+            for (var i = 0; i < animes.length; i++) {
+                var linha = animes[i].nome + " - " + animes[i].genero + " - " + animes[i].ano + " - Nota: " + animes[i].nota;
+                var item = document.createElement("li");
+                item.innerHTML = linha;
+                listaAnimesElement.appendChild(item);
+            }
+        }
+    </script>
+</body>
+</html>
