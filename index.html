@@ -30,12 +30,30 @@
             cursor: pointer;
         }
 
-        ol {
-            padding-left: 20px;
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 500px;
         }
 
-        #listaAnimes {
-            margin-top: 20px;
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
         }
     </style>
 </head>
@@ -66,7 +84,17 @@
     </form>
 
     <h2>Lista de Animes Cadastrados:</h2>
-    <ol id="listaAnimes"></ol>
+    <table id="animeTabela">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Gênero</th>
+                <th>Ano</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody id="listaAnimes"></tbody>
+    </table>
 
     <script>
         var animes = [];
@@ -98,15 +126,30 @@
         }
 
         function exibirAnimes() {
-            var listaAnimesElement = document.getElementById("listaAnimes");
-            listaAnimesElement.innerHTML = "";
+            var listaAnimes = document.getElementById("listaAnimes");
+            listaAnimes.innerHTML = "";
 
-            for (var i = 0; i < animes.length; i++) {
-                var linha = animes[i].nome + " - " + animes[i].genero + " - " + animes[i].ano + " - Nota: " + animes[i].nota;
-                var item = document.createElement("li");
-                item.innerHTML = linha;
-                listaAnimesElement.appendChild(item);
-            }
+            animes.forEach(function(anime) {
+                var linha = document.createElement("tr");
+
+                var dataNome = document.createElement("td");
+                dataNome.textContent = anime.nome;
+                linha.appendChild(dataNome);
+
+                var dataGenero = document.createElement("td");
+                dataGenero.textContent = anime.genero;
+                linha.appendChild(dataGenero);
+
+                var dataAno = document.createElement("td");
+                dataAno.textContent = anime.ano;
+                linha.appendChild(dataAno);
+
+                var dataNota = document.createElement("td");
+                dataNota.textContent = anime.nota;
+                linha.appendChild(dataNota);
+
+                listaAnimes.appendChild(linha);
+            });
         }
     </script>
 </body>
